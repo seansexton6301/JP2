@@ -82,6 +82,7 @@ const COMMANDS = {
 let commandHistory = [];
 let historyIndex = -1;
 let raptorBreachActive = false;
+let badCommandCount = 0;
 
 // ── DOM refs ─────────────────────────────────────────────────
 const output = document.getElementById("output");
@@ -203,15 +204,27 @@ nedryClose.addEventListener("click", () => {
 });
 
 // ── Command router ───────────────────────────────────────────
+const NEDRY_WARNINGS = [
+  "  \u26a0  WARNING: Unrecognized command. Access attempt logged.",
+  "  \u26a0  WARNING: Security violation. One more attempt will trigger lockdown.",
+  "  \u26a0  FINAL WARNING: This is your last chance. Identify yourself.",
+];
+
 function handleCommand(raw) {
   const fn = COMMANDS[raw];
   if (fn) {
+    badCommandCount = 0;
     fn();
   } else {
-    // Easter egg: anything with "please" avoids Nedry
     if (raw.includes("please")) {
-      printLine("Access granted. (You said the magic word.)", "success");
+      badCommandCount = 0;
+      printLine("  Access granted. (You said the magic word.)", "success");
+    } else if (badCommandCount < 3) {
+      printLine(NEDRY_WARNINGS[badCommandCount], "warn");
+      triggerAlertFlash();
+      badCommandCount++;
     } else {
+      badCommandCount = 0;
       triggerNedry();
     }
   }
