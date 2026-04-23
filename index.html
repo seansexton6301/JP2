@@ -67,63 +67,159 @@
 
     <div id="main-layout">
 
-      <!-- Left panel: species tracker -->
+      <!-- Left panel: species tracker + map tabs -->
       <div id="left-panel">
-        <div class="panel-title">// SPECIES TRACKER</div>
-        <div id="species-list">
-          <div class="species-row" data-enc="E1">
-            <span class="species-name">T-REX</span>
-            <span class="species-loc">PAD 4</span>
-            <span class="species-status ok">●</span>
+        <div id="left-tabs">
+          <button class="left-tab active" data-tab="species">SPECIES</button>
+          <button class="left-tab" data-tab="map">PARK MAP</button>
+        </div>
+
+        <!-- Species tab -->
+        <div id="tab-species" class="tab-content active">
+          <div class="panel-title">// SPECIES TRACKER</div>
+          <div id="species-list">
+            <div class="species-row" data-enc="E1">
+              <span class="species-name">T-REX</span>
+              <span class="species-loc">PAD 4</span>
+              <span class="species-status ok">●</span>
+            </div>
+            <div class="species-row" data-enc="E2">
+              <span class="species-name">RAPTOR ×3</span>
+              <span class="species-loc">PEN B</span>
+              <span class="species-status warn">●</span>
+            </div>
+            <div class="species-row" data-enc="E3">
+              <span class="species-name">TRICERATOPS</span>
+              <span class="species-loc">PLAINS</span>
+              <span class="species-status ok">●</span>
+            </div>
+            <div class="species-row" data-enc="E4">
+              <span class="species-name">DILOPHOSAUR</span>
+              <span class="species-loc">SECTOR 7</span>
+              <span class="species-status ok">●</span>
+            </div>
+            <div class="species-row" data-enc="E5">
+              <span class="species-name">BRACHIOSAURUS</span>
+              <span class="species-loc">LAKE</span>
+              <span class="species-status ok">●</span>
+            </div>
+            <div class="species-row" data-enc="E6">
+              <span class="species-name">GALLIMIMUS</span>
+              <span class="species-loc">PLAINS</span>
+              <span class="species-status ok">●</span>
+            </div>
+            <div class="species-row" data-enc="E7">
+              <span class="species-name">PTERANODON</span>
+              <span class="species-loc">AVIARY</span>
+              <span class="species-status ok">●</span>
+            </div>
           </div>
-          <div class="species-row" data-enc="E2">
-            <span class="species-name">RAPTOR ×3</span>
-            <span class="species-loc">PEN B</span>
-            <span class="species-status warn">●</span>
-          </div>
-          <div class="species-row" data-enc="E3">
-            <span class="species-name">TRICERATOPS</span>
-            <span class="species-loc">PLAINS</span>
-            <span class="species-status ok">●</span>
-          </div>
-          <div class="species-row" data-enc="E4">
-            <span class="species-name">DILOPHOSAUR</span>
-            <span class="species-loc">SECTOR 7</span>
-            <span class="species-status ok">●</span>
-          </div>
-          <div class="species-row" data-enc="E5">
-            <span class="species-name">BRACHIOSAURUS</span>
-            <span class="species-loc">LAKE</span>
-            <span class="species-status ok">●</span>
-          </div>
-          <div class="species-row" data-enc="E6">
-            <span class="species-name">GALLIMIMUS</span>
-            <span class="species-loc">PLAINS</span>
-            <span class="species-status ok">●</span>
-          </div>
-          <div class="species-row" data-enc="E7">
-            <span class="species-name">PTERANODON</span>
-            <span class="species-loc">AVIARY</span>
-            <span class="species-status ok">●</span>
+          <div class="panel-title" style="margin-top:14px;">// ENCLOSURE POWER</div>
+          <div id="fence-bars">
+            <div class="fence-row">
+              <span>T-REX PAD</span>
+              <div class="fence-bar"><div class="fence-fill" style="width:100%"></div></div>
+            </div>
+            <div class="fence-row">
+              <span>RAPTOR PEN</span>
+              <div class="fence-bar"><div class="fence-fill warn" style="width:72%"></div></div>
+            </div>
+            <div class="fence-row">
+              <span>DILO SEC.7</span>
+              <div class="fence-bar"><div class="fence-fill" style="width:95%"></div></div>
+            </div>
+            <div class="fence-row">
+              <span>VISITOR CTR</span>
+              <div class="fence-bar"><div class="fence-fill" style="width:88%"></div></div>
+            </div>
           </div>
         </div>
-        <div class="panel-title" style="margin-top:14px;">// ENCLOSURE POWER</div>
-        <div id="fence-bars">
-          <div class="fence-row">
-            <span>T-REX PAD</span>
-            <div class="fence-bar"><div class="fence-fill" style="width:100%"></div></div>
+
+        <!-- Map tab -->
+        <div id="tab-map" class="tab-content">
+          <div class="panel-title">// PARK GRID — ISLA NUBLAR</div>
+          <div id="park-map">
+            <svg id="map-svg" viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+              <!-- Island outline -->
+              <polygon points="20,10 180,10 195,80 190,200 160,250 40,250 10,200 5,80"
+                fill="#001a05" stroke="#00551a" stroke-width="1.5"/>
+
+              <!-- Roads -->
+              <line x1="100" y1="10" x2="100" y2="250" stroke="#002a08" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="5" y1="130" x2="195" y2="130" stroke="#002a08" stroke-width="1" stroke-dasharray="3,3"/>
+
+              <!-- T-Rex Paddock -->
+              <rect x="20" y="20" width="70" height="50" rx="2"
+                fill="#001500" stroke="#00ff41" stroke-width="1.2"/>
+              <text x="55" y="35" text-anchor="middle" class="map-label-sm">T-REX</text>
+              <text x="55" y="46" text-anchor="middle" class="map-label-sm">PADDOCK</text>
+              <circle cx="55" cy="57" r="3" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Raptor Pen -->
+              <rect x="110" y="20" width="70" height="50" rx="2"
+                fill="#1a0d00" stroke="#ffb000" stroke-width="1.2"/>
+              <text x="145" y="35" text-anchor="middle" class="map-label-sm">RAPTOR</text>
+              <text x="145" y="46" text-anchor="middle" class="map-label-sm">PEN B</text>
+              <circle cx="145" cy="57" r="3" fill="#ffb000" class="map-dot-warn"/>
+
+              <!-- Dilophosaur -->
+              <rect x="20" y="85" width="60" height="40" rx="2"
+                fill="#001500" stroke="#00ff41" stroke-width="1"/>
+              <text x="50" y="99" text-anchor="middle" class="map-label-xs">DILOPHOSAUR</text>
+              <text x="50" y="109" text-anchor="middle" class="map-label-xs">SECTOR 7</text>
+              <circle cx="50" cy="118" r="2.5" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Triceratops Plains -->
+              <rect x="110" y="85" width="75" height="40" rx="2"
+                fill="#001500" stroke="#00ff41" stroke-width="1"/>
+              <text x="147" y="99" text-anchor="middle" class="map-label-xs">TRICERATOPS</text>
+              <text x="147" y="109" text-anchor="middle" class="map-label-xs">PLAINS</text>
+              <circle cx="147" cy="118" r="2.5" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Lake / Brachiosaurus -->
+              <ellipse cx="100" cy="155" rx="35" ry="22"
+                fill="#001a10" stroke="#00aa44" stroke-width="1" stroke-dasharray="4,2"/>
+              <text x="100" y="151" text-anchor="middle" class="map-label-xs">LAKE</text>
+              <text x="100" y="161" text-anchor="middle" class="map-label-xs">BRACHIO.</text>
+              <circle cx="100" cy="169" r="2.5" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Gallimimus Plains -->
+              <rect x="20" y="145" width="55" height="35" rx="2"
+                fill="#001500" stroke="#00ff41" stroke-width="1"/>
+              <text x="47" y="159" text-anchor="middle" class="map-label-xs">GALLIMIMUS</text>
+              <text x="47" y="169" text-anchor="middle" class="map-label-xs">PLAINS</text>
+              <circle cx="47" cy="173" r="2.5" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Aviary -->
+              <rect x="135" y="145" width="50" height="35" rx="2"
+                fill="#001500" stroke="#00ff41" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="160" y="160" text-anchor="middle" class="map-label-xs">AVIARY</text>
+              <text x="160" y="170" text-anchor="middle" class="map-label-xs">PTERO.</text>
+              <circle cx="160" cy="173" r="2.5" fill="#00ff41" class="map-dot-ok"/>
+
+              <!-- Visitor Center -->
+              <rect x="70" y="200" width="60" height="35" rx="2"
+                fill="#002200" stroke="#00ff99" stroke-width="1.5"/>
+              <text x="100" y="214" text-anchor="middle" class="map-label-sm">VISITOR</text>
+              <text x="100" y="225" text-anchor="middle" class="map-label-sm">CENTER</text>
+
+              <!-- Helipad -->
+              <circle cx="165" cy="220" r="12" fill="#001500" stroke="#00ff41" stroke-width="1"/>
+              <text x="165" y="218" text-anchor="middle" class="map-label-xs">HELI</text>
+              <text x="165" y="228" text-anchor="middle" class="map-label-xs">PAD</text>
+
+              <!-- Main Gate -->
+              <rect x="85" y="4" width="30" height="8" rx="1"
+                fill="#002200" stroke="#00ff99" stroke-width="1"/>
+              <text x="100" y="11" text-anchor="middle" class="map-label-xs">MAIN GATE</text>
+
+              <!-- Compass -->
+              <text x="185" y="245" text-anchor="middle" class="map-label-xs" fill="#005520">N↑</text>
+            </svg>
           </div>
-          <div class="fence-row">
-            <span>RAPTOR PEN</span>
-            <div class="fence-bar"><div class="fence-fill warn" style="width:72%"></div></div>
-          </div>
-          <div class="fence-row">
-            <span>DILO SEC.7</span>
-            <div class="fence-bar"><div class="fence-fill" style="width:95%"></div></div>
-          </div>
-          <div class="fence-row">
-            <span>VISITOR CTR</span>
-            <div class="fence-bar"><div class="fence-fill" style="width:88%"></div></div>
+          <div class="map-legend">
+            <span class="legend-ok">● SECURE</span>
+            <span class="legend-warn">● WARNING</span>
           </div>
         </div>
       </div>
@@ -141,10 +237,65 @@
       <div id="right-panel">
         <div class="panel-title">// CAMERA FEEDS</div>
         <div id="camera-grid">
-          <div class="cam-cell" id="cam1"><span class="cam-label">CAM-01 MAIN GATE</span><div class="cam-static"></div></div>
-          <div class="cam-cell" id="cam2"><span class="cam-label">CAM-04 T-REX PAD</span><div class="cam-static"></div></div>
-          <div class="cam-cell" id="cam3"><span class="cam-label">CAM-09 RAPTOR PEN</span><div class="cam-static"></div></div>
-          <div class="cam-cell" id="cam4"><span class="cam-label">CAM-12 VISITOR CTR</span><div class="cam-static"></div></div>
+
+          <!-- CAM 1: Main Gate — T-Rex shadow -->
+          <div class="cam-cell" id="cam1">
+            <span class="cam-label">CAM-01 MAIN GATE</span>
+            <span class="cam-rec">● REC</span>
+            <div class="cam-scene" id="scene1">
+              <div class="jungle-bg"></div>
+              <div class="jungle-canopy"></div>
+              <div class="dino-shadow trex-shadow"></div>
+              <div class="cam-grain"></div>
+              <div class="cam-scanline"></div>
+              <div class="cam-timestamp" id="ts1"></div>
+            </div>
+          </div>
+
+          <!-- CAM 2: T-Rex Paddock — Raptor silhouette -->
+          <div class="cam-cell" id="cam2">
+            <span class="cam-label">CAM-04 T-REX PAD</span>
+            <span class="cam-rec">● REC</span>
+            <div class="cam-scene" id="scene2">
+              <div class="jungle-bg jungle-bg-2"></div>
+              <div class="jungle-canopy canopy-2"></div>
+              <div class="dino-shadow raptor-shadow"></div>
+              <div class="cam-grain"></div>
+              <div class="cam-scanline"></div>
+              <div class="cam-timestamp" id="ts2"></div>
+            </div>
+          </div>
+
+          <!-- CAM 3: Raptor Pen — alert state + multiple shadows -->
+          <div class="cam-cell alert-cam" id="cam3">
+            <span class="cam-label">CAM-09 RAPTOR PEN</span>
+            <span class="cam-rec alert-rec">⚠ MOTION</span>
+            <div class="cam-scene" id="scene3">
+              <div class="jungle-bg jungle-bg-3"></div>
+              <div class="jungle-canopy canopy-3"></div>
+              <div class="dino-shadow raptor-shadow raptor-shadow-2"></div>
+              <div class="dino-shadow raptor-shadow raptor-shadow-3"></div>
+              <div class="cam-grain grain-heavy"></div>
+              <div class="cam-scanline"></div>
+              <div class="cam-alert-flash"></div>
+              <div class="cam-timestamp" id="ts3"></div>
+            </div>
+          </div>
+
+          <!-- CAM 4: Visitor Center — Brachio silhouette -->
+          <div class="cam-cell" id="cam4">
+            <span class="cam-label">CAM-12 VISITOR CTR</span>
+            <span class="cam-rec">● REC</span>
+            <div class="cam-scene" id="scene4">
+              <div class="jungle-bg jungle-bg-4"></div>
+              <div class="jungle-canopy canopy-4"></div>
+              <div class="dino-shadow brachio-shadow"></div>
+              <div class="cam-grain"></div>
+              <div class="cam-scanline"></div>
+              <div class="cam-timestamp" id="ts4"></div>
+            </div>
+          </div>
+
         </div>
         <div class="panel-title" style="margin-top:12px;">// SYSTEM ALERTS</div>
         <div id="alert-log">
