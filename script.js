@@ -604,3 +604,27 @@ setInterval(addRandomAlert, 18000);
 document.addEventListener("click", (e) => {
   if (!e.target.closest("#nedry")) input.focus();
 });
+
+// ── Left panel tab switching ──────────────────────────────────
+document.querySelectorAll(".left-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".left-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("tab-" + tab.dataset.tab).classList.add("active");
+  });
+});
+
+// ── CCTV timestamps ───────────────────────────────────────────
+function updateCCTVTimestamps() {
+  const now = new Date();
+  const d = `${String(now.getFullYear()).slice(2)}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+  const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  const stamp = `${d} ${t}`;
+  ["ts1","ts2","ts3","ts4"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = stamp;
+  });
+}
+setInterval(updateCCTVTimestamps, 1000);
+updateCCTVTimestamps();
