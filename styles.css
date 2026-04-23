@@ -1,0 +1,465 @@
+/* ============================================================
+   INGEN BIOSYN — CENTRAL PARK CONTROL CONSOLE
+   Retro CRT terminal aesthetic, 1993 Jurassic Park theme
+   ============================================================ */
+
+:root {
+  --green: #00ff41;
+  --green-dim: #00c032;
+  --green-dark: #003a0e;
+  --green-glow: rgba(0, 255, 65, 0.18);
+  --amber: #ffb000;
+  --amber-dim: #cc8800;
+  --red: #ff2222;
+  --red-dim: #aa0000;
+  --bg: #050d06;
+  --panel-bg: rgba(0, 18, 5, 0.85);
+  --border: #00551a;
+  --border-bright: #00ff41;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-display: 'VT323', monospace;
+  --font-title: 'Orbitron', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--green);
+  font-family: var(--font-mono);
+  overflow: hidden;
+}
+
+/* ── Boot overlay ────────────────────────────────────────── */
+#boot-overlay {
+  position: fixed; inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease;
+}
+#boot-overlay.hidden { opacity: 0; pointer-events: none; }
+
+#boot-text {
+  font-family: var(--font-mono);
+  color: var(--green);
+  font-size: 13px;
+  white-space: pre;
+  line-height: 1.6;
+  text-shadow: 0 0 8px var(--green);
+  max-width: 600px;
+  padding: 20px;
+}
+
+/* ── Scanlines ───────────────────────────────────────────── */
+#scanlines {
+  position: fixed; inset: 0; pointer-events: none; z-index: 100;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.13) 2px,
+    rgba(0,0,0,0.13) 4px
+  );
+}
+
+/* ── CRT vignette ────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 99;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+}
+
+/* ── CRT flicker ─────────────────────────────────────────── */
+#crt-flicker {
+  position: fixed; inset: 0; pointer-events: none; z-index: 101;
+  animation: flicker 8s infinite;
+  background: rgba(0,255,65,0.015);
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  91% { opacity: 1; }
+  92% { opacity: 0.6; }
+  93% { opacity: 1; }
+  95% { opacity: 0.8; }
+  96% { opacity: 1; }
+}
+
+/* ── Terminal shell ──────────────────────────────────────── */
+#terminal {
+  display: flex; flex-direction: column;
+  width: 100vw; height: 100vh;
+  border: 1px solid var(--border);
+  padding: 0;
+  position: relative;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+#header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 14px;
+  background: #000;
+  border-bottom: 1px solid var(--border-bright);
+  flex-shrink: 0;
+}
+
+#header-left {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: var(--green-dim);
+  font-family: var(--font-mono);
+}
+
+.blink-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink-dot 1.2s infinite;
+  box-shadow: 0 0 6px var(--green);
+}
+@keyframes blink-dot {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.1; }
+}
+
+#header-center {
+  font-family: var(--font-title);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--green);
+  text-shadow: 0 0 14px var(--green);
+  text-align: center;
+}
+
+#header-right {
+  display: flex; gap: 18px; align-items: center;
+  font-size: 11px; color: var(--green-dim);
+}
+
+#threat-value { color: var(--green); font-weight: bold; }
+#threat-value.warn { color: var(--amber); }
+#threat-value.danger { color: var(--red); animation: blink-text 0.5s infinite; }
+
+@keyframes blink-text { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+/* ── Status strip ────────────────────────────────────────── */
+#status-strip {
+  display: flex; gap: 0;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,10,2,0.9);
+  flex-shrink: 0;
+}
+
+.status-block {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 4px 8px;
+  border-right: 1px solid var(--border);
+  font-size: 10px;
+}
+.status-block:last-child { border-right: none; }
+
+.status-label { color: #005520; letter-spacing: 1px; font-size: 9px; }
+.status-val { font-size: 11px; font-weight: bold; margin-top: 1px; }
+.status-val.online { color: var(--green); text-shadow: 0 0 6px var(--green); }
+.status-val.warn { color: var(--amber); text-shadow: 0 0 6px var(--amber); }
+.status-val.offline { color: var(--red); animation: blink-text 1s infinite; }
+
+/* ── Main layout (3 columns) ─────────────────────────────── */
+#main-layout {
+  display: flex; flex: 1; overflow: hidden;
+  gap: 0;
+}
+
+/* ── Panel common ────────────────────────────────────────── */
+#left-panel, #right-panel {
+  width: 220px; flex-shrink: 0;
+  background: var(--panel-bg);
+  padding: 10px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+#left-panel { border-right: 1px solid var(--border); }
+#right-panel { border-left: 1px solid var(--border); }
+
+.panel-title {
+  font-size: 10px;
+  color: var(--green-dim);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+/* ── Species tracker ─────────────────────────────────────── */
+.species-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 4px;
+  border-bottom: 1px solid rgba(0,80,20,0.3);
+  font-size: 11px;
+  cursor: default;
+  transition: background 0.15s;
+}
+.species-row:hover { background: rgba(0,255,65,0.06); }
+.species-name { flex: 1; color: var(--green); font-size: 10px; }
+.species-loc { color: #005f20; font-size: 9px; min-width: 42px; text-align: right; }
+.species-status { font-size: 14px; }
+.species-status.ok { color: var(--green); text-shadow: 0 0 6px var(--green); }
+.species-status.warn { color: var(--amber); text-shadow: 0 0 6px var(--amber); animation: blink-text 2s infinite; }
+
+/* ── Fence power bars ────────────────────────────────────── */
+.fence-row {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 6px; font-size: 9px; color: #005f20;
+}
+.fence-row span { min-width: 65px; }
+.fence-bar {
+  flex: 1; height: 6px;
+  background: rgba(0,80,20,0.3);
+  border: 1px solid var(--border);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.fence-fill {
+  height: 100%;
+  background: var(--green);
+  box-shadow: 0 0 4px var(--green);
+  transition: width 1s ease;
+}
+.fence-fill.warn {
+  background: var(--amber);
+  box-shadow: 0 0 4px var(--amber);
+}
+
+/* ── Center terminal ─────────────────────────────────────── */
+#center-panel {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden;
+  background: rgba(0, 8, 2, 0.95);
+}
+
+#output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 8px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--green);
+  text-shadow: 0 0 4px rgba(0,255,65,0.4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+#output .line { display: block; white-space: pre-wrap; word-break: break-word; }
+#output .line.cmd { color: #00ff41; }
+#output .line.info { color: #00c032; }
+#output .line.warn { color: var(--amber); }
+#output .line.error { color: var(--red); }
+#output .line.success { color: #00ff99; text-shadow: 0 0 8px #00ff99; }
+#output .line.dim { color: #005520; }
+#output .line.separator { color: #003a10; }
+
+#input-line {
+  display: flex; align-items: center;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.5);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+#prompt {
+  color: var(--green);
+  font-size: 15px;
+  text-shadow: 0 0 8px var(--green);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+#input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-shadow: 0 0 4px rgba(0,255,65,0.5);
+  caret-color: var(--green);
+}
+
+#input::placeholder { color: #004010; font-style: italic; }
+
+/* ── Camera grid ─────────────────────────────────────────── */
+#camera-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.cam-cell {
+  position: relative;
+  height: 60px;
+  background: #020a03;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.cam-cell:hover { border-color: var(--green); }
+
+.cam-label {
+  position: absolute; top: 3px; left: 4px;
+  font-size: 7px; color: #005020;
+  letter-spacing: 0.5px;
+  z-index: 2;
+}
+
+.cam-static {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.25'/%3E%3C/svg%3E");
+  background-size: cover;
+  opacity: 0.5;
+  animation: static-shift 0.15s steps(1) infinite;
+}
+
+@keyframes static-shift {
+  0% { background-position: 0 0; }
+  25% { background-position: 30px -20px; }
+  50% { background-position: -10px 15px; }
+  75% { background-position: 20px 5px; }
+}
+
+/* Cam 3 (raptor) glows amber to indicate alert */
+#cam3 { border-color: var(--amber-dim); }
+#cam3 .cam-static { opacity: 0.7; }
+
+/* ── Alert log ───────────────────────────────────────────── */
+.alert-item {
+  font-size: 9px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(0,50,15,0.4);
+  line-height: 1.4;
+}
+.alert-item.ok { color: #005f20; }
+.alert-item.warn { color: var(--amber-dim); }
+.alert-item.error { color: var(--red-dim); }
+
+/* ── Command buttons ─────────────────────────────────────── */
+#command-buttons {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--border-bright);
+  background: #000;
+  flex-shrink: 0;
+}
+
+.cmd-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 8px 4px;
+  background: #000;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--green-dim);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  transition: background 0.12s, color 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+.cmd-btn:last-child { border-right: none; }
+
+.cmd-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--green-glow);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.cmd-btn:hover::before { opacity: 1; }
+.cmd-btn:hover { color: var(--green); }
+.cmd-btn:active { background: rgba(0,255,65,0.12); }
+
+.btn-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--green);
+  text-shadow: 0 0 8px var(--green);
+}
+.btn-label {
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  margin-top: 2px;
+  color: inherit;
+}
+
+.cmd-btn.danger .btn-num { color: var(--red); text-shadow: 0 0 8px var(--red); }
+.cmd-btn.danger:hover { color: var(--red); }
+.cmd-btn.danger::before { background: rgba(255,34,34,0.12); }
+
+/* ── Nedry overlay ───────────────────────────────────────── */
+#nedry {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.92);
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px;
+  animation: nedry-shake 0.5s ease;
+}
+#nedry.active { display: flex; }
+
+@keyframes nedry-shake {
+  0% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  40% { transform: translateX(-8px); }
+  60% { transform: translateX(8px); }
+  80% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.denied {
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 14px var(--red);
+}
+
+#nedry img {
+  border: 2px solid var(--red);
+  max-height: 220px;
+  box-shadow: 0 0 30px rgba(255,0,0,0.5);
+}
+
+#nedry-close {
+  background: none;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 6px 18px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+#nedry-close:hover { background: rgba(255,34,34,0.15); }
+
+/* ── Alert flash ─────────────────────────────────────────── */
+#alert-flash {
+  position: fixed; inset: 0; pointer-events: none; z-index: 200;
+  background: rgba(255,34,34,0.12);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#alert-flash.flash { animation: flash-anim 0.6s ease; }
+@keyframes flash-anim {
+  0%,100% { opacity: 0; }
+  30% { opacity: 1; }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
