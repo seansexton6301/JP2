@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Park Control Console — InGen Corp.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Boot sequence overlay -->
+  <div id="boot-overlay">
+    <div id="boot-text"></div>
+  </div>
+
+  <!-- Scanline overlay -->
+  <div id="scanlines"></div>
+
+  <!-- CRT flicker overlay -->
+  <div id="crt-flicker"></div>
+
+  <div id="terminal">
+
+    <!-- Header bar -->
+    <div id="header">
+      <div id="header-left">
+        <span class="blink-dot"></span>
+        <span id="system-label">INGEN BIOSYN SECURITY — v4.0.5α</span>
+      </div>
+      <div id="header-center">CENTRAL PARK CONTROL CONSOLE</div>
+      <div id="header-right">
+        <span id="clock"></span>
+        <span id="threat-level">THREAT: <span id="threat-value">LOW</span></span>
+      </div>
+    </div>
+
+    <!-- Status strip -->
+    <div id="status-strip">
+      <div class="status-block" id="fence-status">
+        <span class="status-label">FENCE</span>
+        <span class="status-val online">ONLINE</span>
+      </div>
+      <div class="status-block" id="power-status">
+        <span class="status-label">POWER</span>
+        <span class="status-val online">100%</span>
+      </div>
+      <div class="status-block" id="gate-status">
+        <span class="status-label">GATES</span>
+        <span class="status-val online">LOCKED</span>
+      </div>
+      <div class="status-block" id="camera-status">
+        <span class="status-label">CAMERAS</span>
+        <span class="status-val online">32/32</span>
+      </div>
+      <div class="status-block" id="raptor-status">
+        <span class="status-label">RAPTORS</span>
+        <span class="status-val warn">3 TRACKED</span>
+      </div>
+    </div>
+
+    <div id="main-layout">
+
+      <!-- Left panel: species tracker -->
+      <div id="left-panel">
+        <div class="panel-title">// SPECIES TRACKER</div>
+        <div id="species-list">
+          <div class="species-row" data-enc="E1">
+            <span class="species-name">T-REX</span>
+            <span class="species-loc">PAD 4</span>
+            <span class="species-status ok">●</span>
+          </div>
+          <div class="species-row" data-enc="E2">
+            <span class="species-name">RAPTOR ×3</span>
+            <span class="species-loc">PEN B</span>
+            <span class="species-status warn">●</span>
+          </div>
+          <div class="species-row" data-enc="E3">
+            <span class="species-name">TRICERATOPS</span>
+            <span class="species-loc">PLAINS</span>
+            <span class="species-status ok">●</span>
+          </div>
+          <div class="species-row" data-enc="E4">
+            <span class="species-name">DILOPHOSAUR</span>
+            <span class="species-loc">SECTOR 7</span>
+            <span class="species-status ok">●</span>
+          </div>
+          <div class="species-row" data-enc="E5">
+            <span class="species-name">BRACHIOSAURUS</span>
+            <span class="species-loc">LAKE</span>
+            <span class="species-status ok">●</span>
+          </div>
+          <div class="species-row" data-enc="E6">
+            <span class="species-name">GALLIMIMUS</span>
+            <span class="species-loc">PLAINS</span>
+            <span class="species-status ok">●</span>
+          </div>
+          <div class="species-row" data-enc="E7">
+            <span class="species-name">PTERANODON</span>
+            <span class="species-loc">AVIARY</span>
+            <span class="species-status ok">●</span>
+          </div>
+        </div>
+        <div class="panel-title" style="margin-top:14px;">// ENCLOSURE POWER</div>
+        <div id="fence-bars">
+          <div class="fence-row">
+            <span>T-REX PAD</span>
+            <div class="fence-bar"><div class="fence-fill" style="width:100%"></div></div>
+          </div>
+          <div class="fence-row">
+            <span>RAPTOR PEN</span>
+            <div class="fence-bar"><div class="fence-fill warn" style="width:72%"></div></div>
+          </div>
+          <div class="fence-row">
+            <span>DILO SEC.7</span>
+            <div class="fence-bar"><div class="fence-fill" style="width:95%"></div></div>
+          </div>
+          <div class="fence-row">
+            <span>VISITOR CTR</span>
+            <div class="fence-bar"><div class="fence-fill" style="width:88%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: terminal output + input -->
+      <div id="center-panel">
+        <div id="output"></div>
+        <div id="input-line">
+          <span id="prompt">&gt;_</span>
+          <input type="text" id="input" autofocus autocomplete="off" spellcheck="false" placeholder="type command or press a button...">
+        </div>
+      </div>
+
+      <!-- Right panel: cameras + alerts -->
+      <div id="right-panel">
+        <div class="panel-title">// CAMERA FEEDS</div>
+        <div id="camera-grid">
+          <div class="cam-cell" id="cam1"><span class="cam-label">CAM-01 MAIN GATE</span><div class="cam-static"></div></div>
+          <div class="cam-cell" id="cam2"><span class="cam-label">CAM-04 T-REX PAD</span><div class="cam-static"></div></div>
+          <div class="cam-cell" id="cam3"><span class="cam-label">CAM-09 RAPTOR PEN</span><div class="cam-static"></div></div>
+          <div class="cam-cell" id="cam4"><span class="cam-label">CAM-12 VISITOR CTR</span><div class="cam-static"></div></div>
+        </div>
+        <div class="panel-title" style="margin-top:12px;">// SYSTEM ALERTS</div>
+        <div id="alert-log">
+          <div class="alert-item warn">[07:42] Motion — Raptor Pen perimeter</div>
+          <div class="alert-item ok">[07:38] Fence restore — Sector 9</div>
+          <div class="alert-item ok">[07:15] Auth OK — Dr. Grant</div>
+          <div class="alert-item warn">[06:55] Power dip — 14% (Pen B)</div>
+          <div class="alert-item ok">[06:30] System boot complete</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Command buttons -->
+    <div id="command-buttons">
+      <button data-cmd="menu" class="cmd-btn">
+        <span class="btn-num">M</span>
+        <span class="btn-label">MENU</span>
+      </button>
+      <button data-cmd="1" class="cmd-btn">
+        <span class="btn-num">1</span>
+        <span class="btn-label">SECURITY GRID</span>
+      </button>
+      <button data-cmd="2" class="cmd-btn">
+        <span class="btn-num">2</span>
+        <span class="btn-label">MAIN PROGRAM</span>
+      </button>
+      <button data-cmd="3" class="cmd-btn">
+        <span class="btn-num">3</span>
+        <span class="btn-label">VIEW CAMERAS</span>
+      </button>
+      <button data-cmd="4" class="cmd-btn">
+        <span class="btn-num">4</span>
+        <span class="btn-label">CONTROL LIGHTS</span>
+      </button>
+      <button data-cmd="5" class="cmd-btn danger">
+        <span class="btn-num">5</span>
+        <span class="btn-label">EMERGENCY PWR</span>
+      </button>
+      <button data-cmd="6" class="cmd-btn">
+        <span class="btn-num">6</span>
+        <span class="btn-label">SYSTEM STATUS</span>
+      </button>
+      <button data-cmd="7" class="cmd-btn">
+        <span class="btn-num">?</span>
+        <span class="btn-label">HELP</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Nedry overlay -->
+  <div id="nedry">
+    <p class="denied">====================================</p>
+    <p class="denied">YOU DIDN'T SAY THE MAGIC WORD!</p>
+    <img src="https://media.giphy.com/media/3ohzdQ1IynzclJldUQ/giphy.gif"
+         alt="Ah ah ah! You didn't say the magic word!"
+         title="Dennis Nedry taunts you">
+    <button id="nedry-close">[ DISMISS ]</button>
+  </div>
+
+  <!-- Alert flash overlay -->
+  <div id="alert-flash"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
