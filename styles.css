@@ -23,10 +23,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  width: 100%; height: 100%;
-  background: var(--bg);
-}
+html { width: 100%; height: 100%; background: var(--bg); }
 
 body {
   width: 100%; height: 100%;
@@ -35,8 +32,7 @@ body {
   color: var(--green);
   font-family: var(--font-mono);
   overflow: hidden;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
 }
 
 /* ── Boot overlay ────────────────────────────────────────── */
@@ -64,11 +60,8 @@ body {
 #scanlines {
   position: fixed; inset: 0; pointer-events: none; z-index: 100;
   background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.13) 2px,
-    rgba(0,0,0,0.13) 4px
+    to bottom, transparent, transparent 2px,
+    rgba(0,0,0,0.13) 2px, rgba(0,0,0,0.13) 4px
   );
 }
 
@@ -87,11 +80,8 @@ body::after {
 }
 @keyframes flicker {
   0%,100% { opacity: 1; }
-  91% { opacity: 1; }
-  92% { opacity: 0.6; }
-  93% { opacity: 1; }
-  95% { opacity: 0.8; }
-  96% { opacity: 1; }
+  91% { opacity: 1; } 92% { opacity: 0.6; } 93% { opacity: 1; }
+  95% { opacity: 0.8; } 96% { opacity: 1; }
 }
 
 /* ── Terminal shell ──────────────────────────────────────── */
@@ -111,25 +101,18 @@ body::after {
   border-bottom: 1px solid var(--border-bright);
   flex-shrink: 0;
 }
-
 #header-left {
   display: flex; align-items: center; gap: 8px;
   font-size: 11px; color: var(--green-dim);
-  font-family: var(--font-mono);
 }
-
 .blink-dot {
   width: 8px; height: 8px;
-  background: var(--green);
-  border-radius: 50%;
+  background: var(--green); border-radius: 50%;
   display: inline-block;
   animation: blink-dot 1.2s infinite;
   box-shadow: 0 0 6px var(--green);
 }
-@keyframes blink-dot {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.1; }
-}
+@keyframes blink-dot { 0%,100% { opacity:1; } 50% { opacity:0.1; } }
 
 #header-center {
   font-family: var(--font-title);
@@ -139,16 +122,13 @@ body::after {
   text-shadow: 0 0 14px var(--green);
   text-align: center;
 }
-
 #header-right {
   display: flex; gap: 18px; align-items: center;
   font-size: 11px; color: var(--green-dim);
 }
-
 #threat-value { color: var(--green); font-weight: bold; }
 #threat-value.warn { color: var(--amber); }
 #threat-value.danger { color: var(--red); animation: blink-text 0.5s infinite; }
-
 @keyframes blink-text { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
 /* ── Status strip ────────────────────────────────────────── */
@@ -158,56 +138,40 @@ body::after {
   background: rgba(0,10,2,0.9);
   flex-shrink: 0;
 }
-
 .status-block {
-  flex: 1;
-  display: flex; flex-direction: column; align-items: center;
-  padding: 4px 8px;
-  border-right: 1px solid var(--border);
-  font-size: 10px;
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  padding: 4px 8px; border-right: 1px solid var(--border); font-size: 10px;
 }
 .status-block:last-child { border-right: none; }
-
 .status-label { color: #005520; letter-spacing: 1px; font-size: 9px; }
 .status-val { font-size: 11px; font-weight: bold; margin-top: 1px; }
 .status-val.online { color: var(--green); text-shadow: 0 0 6px var(--green); }
 .status-val.warn { color: var(--amber); text-shadow: 0 0 6px var(--amber); }
 .status-val.offline { color: var(--red); animation: blink-text 1s infinite; }
 
-/* ── Main layout (3 columns) ─────────────────────────────── */
-#main-layout {
-  display: flex; flex: 1; overflow: hidden;
-  gap: 0;
-}
+/* ── Main layout ─────────────────────────────────────────── */
+#main-layout { display: flex; flex: 1; overflow: hidden; }
 
-/* ── Panel common ────────────────────────────────────────── */
+/* ── Panels ──────────────────────────────────────────────── */
 #left-panel, #right-panel {
   width: 220px; flex-shrink: 0;
   background: var(--panel-bg);
-  padding: 10px;
-  overflow-y: auto;
-  scrollbar-width: none;
+  padding: 10px; overflow-y: auto; scrollbar-width: none;
 }
 #left-panel { border-right: 1px solid var(--border); }
 #right-panel { border-left: 1px solid var(--border); }
 
 .panel-title {
-  font-size: 10px;
-  color: var(--green-dim);
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 4px;
+  font-size: 10px; color: var(--green-dim);
+  letter-spacing: 2px; margin-bottom: 8px;
+  border-bottom: 1px solid var(--border); padding-bottom: 4px;
 }
 
 /* ── Species tracker ─────────────────────────────────────── */
 .species-row {
   display: flex; align-items: center; gap: 6px;
-  padding: 4px 4px;
-  border-bottom: 1px solid rgba(0,80,20,0.3);
-  font-size: 11px;
-  cursor: default;
-  transition: background 0.15s;
+  padding: 4px; border-bottom: 1px solid rgba(0,80,20,0.3);
+  font-size: 11px; cursor: default; transition: background 0.15s;
 }
 .species-row:hover { background: rgba(0,255,65,0.06); }
 .species-name { flex: 1; color: var(--green); font-size: 10px; }
@@ -216,49 +180,32 @@ body::after {
 .species-status.ok { color: var(--green); text-shadow: 0 0 6px var(--green); }
 .species-status.warn { color: var(--amber); text-shadow: 0 0 6px var(--amber); animation: blink-text 2s infinite; }
 
-/* ── Fence power bars ────────────────────────────────────── */
+/* ── Fence bars ──────────────────────────────────────────── */
 .fence-row {
   display: flex; align-items: center; gap: 6px;
   margin-bottom: 6px; font-size: 9px; color: #005f20;
 }
 .fence-row span { min-width: 65px; }
 .fence-bar {
-  flex: 1; height: 6px;
-  background: rgba(0,80,20,0.3);
-  border: 1px solid var(--border);
-  border-radius: 1px;
-  overflow: hidden;
+  flex: 1; height: 6px; background: rgba(0,80,20,0.3);
+  border: 1px solid var(--border); border-radius: 1px; overflow: hidden;
 }
 .fence-fill {
-  height: 100%;
-  background: var(--green);
-  box-shadow: 0 0 4px var(--green);
-  transition: width 1s ease;
+  height: 100%; background: var(--green);
+  box-shadow: 0 0 4px var(--green); transition: width 1s ease;
 }
-.fence-fill.warn {
-  background: var(--amber);
-  box-shadow: 0 0 4px var(--amber);
-}
+.fence-fill.warn { background: var(--amber); box-shadow: 0 0 4px var(--amber); }
 
 /* ── Center terminal ─────────────────────────────────────── */
-#center-panel {
-  flex: 1; display: flex; flex-direction: column;
-  overflow: hidden;
-  background: rgba(0, 8, 2, 0.95);
-}
+#center-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: rgba(0,8,2,0.95); }
 
 #output {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1; overflow-y: auto;
   padding: 14px 16px 8px;
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--green);
-  text-shadow: 0 0 4px rgba(0,255,65,0.4);
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  font-size: 13px; line-height: 1.65;
+  color: var(--green); text-shadow: 0 0 4px rgba(0,255,65,0.4);
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
 }
-
 #output .line { display: block; white-space: pre-wrap; word-break: break-word; }
 #output .line.cmd { color: #00ff41; }
 #output .line.info { color: #00c032; }
@@ -270,202 +217,86 @@ body::after {
 
 #input-line {
   display: flex; align-items: center;
-  padding: 8px 16px;
-  border-top: 1px solid var(--border);
-  background: rgba(0,0,0,0.5);
-  flex-shrink: 0;
-  gap: 8px;
+  padding: 8px 16px; border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.5); flex-shrink: 0; gap: 8px;
 }
-
 #prompt {
-  color: var(--green);
-  font-size: 15px;
-  text-shadow: 0 0 8px var(--green);
-  font-family: var(--font-mono);
-  flex-shrink: 0;
+  color: var(--green); font-size: 15px;
+  text-shadow: 0 0 8px var(--green); flex-shrink: 0;
 }
-
 #input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--green);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  text-shadow: 0 0 4px rgba(0,255,65,0.5);
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--green); font-family: var(--font-mono);
+  font-size: 13px; text-shadow: 0 0 4px rgba(0,255,65,0.5);
   caret-color: var(--green);
 }
-
 #input::placeholder { color: #004010; font-style: italic; }
-
-/* ── Camera grid ─────────────────────────────────────────── */
-#camera-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-}
-
-.cam-cell {
-  position: relative;
-  height: 60px;
-  background: #020a03;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-.cam-cell:hover { border-color: var(--green); }
-
-.cam-label {
-  position: absolute; top: 3px; left: 4px;
-  font-size: 7px; color: #005020;
-  letter-spacing: 0.5px;
-  z-index: 2;
-}
-
-.cam-static {
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.25'/%3E%3C/svg%3E");
-  background-size: cover;
-  opacity: 0.5;
-  animation: static-shift 0.15s steps(1) infinite;
-}
-
-@keyframes static-shift {
-  0% { background-position: 0 0; }
-  25% { background-position: 30px -20px; }
-  50% { background-position: -10px 15px; }
-  75% { background-position: 20px 5px; }
-}
-
-/* Cam 3 (raptor) glows amber to indicate alert */
-#cam3 { border-color: var(--amber-dim); }
-#cam3 .cam-static { opacity: 0.7; }
-
-/* ── Alert log ───────────────────────────────────────────── */
-.alert-item {
-  font-size: 9px;
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(0,50,15,0.4);
-  line-height: 1.4;
-}
-.alert-item.ok { color: #005f20; }
-.alert-item.warn { color: var(--amber-dim); }
-.alert-item.error { color: var(--red-dim); }
 
 /* ── Command buttons ─────────────────────────────────────── */
 #command-buttons {
   display: flex; gap: 0;
   border-top: 1px solid var(--border-bright);
-  background: #000;
-  flex-shrink: 0;
+  background: #000; flex-shrink: 0;
 }
-
 .cmd-btn {
-  flex: 1;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 8px 4px;
-  background: #000;
-  border: none;
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 8px 4px; background: #000; border: none;
   border-right: 1px solid var(--border);
-  color: var(--green-dim);
-  cursor: pointer;
+  color: var(--green-dim); cursor: pointer;
   font-family: var(--font-mono);
   transition: background 0.12s, color 0.12s;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
 .cmd-btn:last-child { border-right: none; }
-
 .cmd-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--green-glow);
-  opacity: 0;
-  transition: opacity 0.15s;
+  content: ''; position: absolute; inset: 0;
+  background: var(--green-glow); opacity: 0; transition: opacity 0.15s;
 }
 .cmd-btn:hover::before { opacity: 1; }
 .cmd-btn:hover { color: var(--green); }
 .cmd-btn:active { background: rgba(0,255,65,0.12); }
-
 .btn-num {
-  font-family: var(--font-display);
-  font-size: 20px;
-  line-height: 1;
-  color: var(--green);
-  text-shadow: 0 0 8px var(--green);
+  font-family: var(--font-display); font-size: 20px; line-height: 1;
+  color: var(--green); text-shadow: 0 0 8px var(--green);
 }
-.btn-label {
-  font-size: 8px;
-  letter-spacing: 0.8px;
-  margin-top: 2px;
-  color: inherit;
-}
-
+.btn-label { font-size: 8px; letter-spacing: 0.8px; margin-top: 2px; color: inherit; }
 .cmd-btn.danger .btn-num { color: var(--red); text-shadow: 0 0 8px var(--red); }
 .cmd-btn.danger:hover { color: var(--red); }
 .cmd-btn.danger::before { background: rgba(255,34,34,0.12); }
 
 /* ── Nedry overlay ───────────────────────────────────────── */
 #nedry {
-  display: none;
-  position: fixed; inset: 0; z-index: 500;
+  display: none; position: fixed; inset: 0; z-index: 500;
   background: rgba(0,0,0,0.92);
   flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px;
-  animation: nedry-shake 0.5s ease;
+  gap: 12px; animation: nedry-shake 0.5s ease;
 }
 #nedry.active { display: flex; }
-
 @keyframes nedry-shake {
-  0% { transform: translateX(-10px); }
-  20% { transform: translateX(10px); }
-  40% { transform: translateX(-8px); }
-  60% { transform: translateX(8px); }
-  80% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
+  0% { transform: translateX(-10px); } 20% { transform: translateX(10px); }
+  40% { transform: translateX(-8px); } 60% { transform: translateX(8px); }
+  80% { transform: translateX(-4px); } 100% { transform: translateX(0); }
 }
-
 .denied {
-  color: var(--red);
-  font-family: var(--font-display);
-  font-size: 28px;
-  letter-spacing: 4px;
-  text-shadow: 0 0 14px var(--red);
+  color: var(--red); font-family: var(--font-display);
+  font-size: 28px; letter-spacing: 4px; text-shadow: 0 0 14px var(--red);
 }
-
-#nedry img {
-  border: 2px solid var(--red);
-  max-height: 220px;
-  box-shadow: 0 0 30px rgba(255,0,0,0.5);
-}
-
+#nedry img { border: 2px solid var(--red); max-height: 220px; box-shadow: 0 0 30px rgba(255,0,0,0.5); }
 #nedry-close {
-  background: none;
-  border: 1px solid var(--red);
-  color: var(--red);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  padding: 6px 18px;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: background 0.15s;
+  background: none; border: 1px solid var(--red); color: var(--red);
+  font-family: var(--font-mono); font-size: 13px; padding: 6px 18px;
+  cursor: pointer; margin-top: 8px; transition: background 0.15s;
 }
 #nedry-close:hover { background: rgba(255,34,34,0.15); }
 
 /* ── Alert flash ─────────────────────────────────────────── */
 #alert-flash {
   position: fixed; inset: 0; pointer-events: none; z-index: 200;
-  background: rgba(255,34,34,0.12);
-  opacity: 0;
-  transition: opacity 0.3s;
+  background: rgba(255,34,34,0.12); opacity: 0; transition: opacity 0.3s;
 }
 #alert-flash.flash { animation: flash-anim 0.6s ease; }
-@keyframes flash-anim {
-  0%,100% { opacity: 0; }
-  30% { opacity: 1; }
-}
+@keyframes flash-anim { 0%,100% { opacity:0; } 30% { opacity:1; } }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
@@ -475,105 +306,49 @@ body::after {
 /* ══════════════════════════════════════════════════════════
    LEFT PANEL TABS
 ══════════════════════════════════════════════════════════ */
-
 #left-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
-  flex-shrink: 0;
+  display: flex; border-bottom: 1px solid var(--border);
+  margin-bottom: 8px; flex-shrink: 0;
 }
-
 .left-tab {
-  flex: 1;
-  background: none;
-  border: none;
+  flex: 1; background: none; border: none;
   border-bottom: 2px solid transparent;
-  color: #005520;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  padding: 5px 4px;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  color: #005520; font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 1.5px; padding: 5px 4px;
+  cursor: pointer; transition: color 0.15s, border-color 0.15s;
 }
 .left-tab:hover { color: var(--green-dim); }
-.left-tab.active {
-  color: var(--green);
-  border-bottom-color: var(--green);
-  text-shadow: 0 0 6px var(--green);
-}
-
+.left-tab.active { color: var(--green); border-bottom-color: var(--green); text-shadow: 0 0 6px var(--green); }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
 /* ══════════════════════════════════════════════════════════
    PARK MAP
 ══════════════════════════════════════════════════════════ */
-
-#park-map {
-  width: 100%;
-  padding: 4px 0;
-}
-
-#map-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.map-label-sm {
-  font-family: var(--font-mono);
-  font-size: 7px;
-  fill: #00cc33;
-  letter-spacing: 0.3px;
-}
-
-.map-label-xs {
-  font-family: var(--font-mono);
-  font-size: 6px;
-  fill: #009922;
-  letter-spacing: 0.2px;
-}
-
-.map-dot-ok {
-  animation: map-pulse-ok 2s ease-in-out infinite;
-}
-.map-dot-warn {
-  animation: map-pulse-warn 1s ease-in-out infinite;
-}
-
-@keyframes map-pulse-ok {
-  0%, 100% { opacity: 1; r: 3; }
-  50% { opacity: 0.4; r: 2; }
-}
-@keyframes map-pulse-warn {
-  0%, 100% { opacity: 1; r: 3; }
-  50% { opacity: 0.2; r: 2; }
-}
-
+#park-map { width: 100%; padding: 4px 0; }
+#map-svg { width: 100%; height: auto; display: block; }
+.map-label-sm { font-family: var(--font-mono); font-size: 7px; fill: #00cc33; letter-spacing: 0.3px; }
+.map-label-xs { font-family: var(--font-mono); font-size: 6px; fill: #009922; letter-spacing: 0.2px; }
+.map-dot-ok { animation: map-pulse-ok 2s ease-in-out infinite; }
+.map-dot-warn { animation: map-pulse-warn 1s ease-in-out infinite; }
+@keyframes map-pulse-ok { 0%,100% { opacity:1; r:3; } 50% { opacity:0.4; r:2; } }
+@keyframes map-pulse-warn { 0%,100% { opacity:1; r:3; } 50% { opacity:0.2; r:2; } }
 .map-legend {
-  display: flex;
-  gap: 12px;
-  font-size: 8px;
-  padding: 4px 2px;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
+  display: flex; gap: 12px; font-size: 8px;
+  padding: 4px 2px; border-top: 1px solid var(--border); margin-top: 4px;
 }
 .legend-ok { color: var(--green); }
 .legend-warn { color: var(--amber); }
 
 /* ══════════════════════════════════════════════════════════
-   CCTV JUNGLE CAMERA SCENES
+   CAMERA CELLS — OFFLINE BY DEFAULT
 ══════════════════════════════════════════════════════════ */
+#camera-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 
 .cam-cell {
-  position: relative;
-  height: 72px;
-  background: #000;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.2s;
+  position: relative; height: 80px;
+  background: #000; border: 1px solid var(--border);
+  overflow: hidden; cursor: pointer; transition: border-color 0.2s;
 }
 .cam-cell:hover { border-color: var(--green); }
 .cam-cell.alert-cam { border-color: var(--amber-dim); }
@@ -581,295 +356,141 @@ body::after {
 .cam-label {
   position: absolute; top: 3px; left: 4px;
   font-size: 7px; color: rgba(0,200,50,0.7);
-  letter-spacing: 0.5px;
-  z-index: 10;
+  letter-spacing: 0.5px; z-index: 10;
   text-shadow: 0 0 4px rgba(0,255,65,0.5);
 }
-
 .cam-rec {
   position: absolute; top: 3px; right: 4px;
-  font-size: 7px; color: var(--green);
-  z-index: 10;
+  font-size: 7px; color: var(--green); z-index: 10;
   animation: blink-text 2s infinite;
 }
-.alert-rec {
-  color: var(--amber);
-  animation: blink-text 0.6s infinite !important;
-}
+.alert-rec { color: var(--amber); animation: blink-text 0.6s infinite !important; }
 
-/* Full-size scene container */
-.cam-scene {
+/* ── Canvas for live B&W cams ────────────────────────────── */
+.cam-canvas {
   position: absolute; inset: 0;
+  width: 100%; height: 100%;
 }
 
-/* Jungle background — layered greens */
-.jungle-bg {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg,
-      #000d02 0%,
-      #001a05 30%,
-      #002a08 60%,
-      #001500 100%
-    );
-}
-.jungle-bg-2 {
-  background:
-    linear-gradient(180deg,
-      #010800 0%,
-      #001200 40%,
-      #002005 70%,
-      #000c00 100%
-    );
-}
-.jungle-bg-3 {
-  background:
-    linear-gradient(180deg,
-      #080800 0%,
-      #0d0f00 30%,
-      #001a00 60%,
-      #000d00 100%
-    );
-}
-.jungle-bg-4 {
-  background:
-    linear-gradient(180deg,
-      #000e04 0%,
-      #001f07 40%,
-      #003010 65%,
-      #001800 100%
-    );
-}
-
-/* Animated canopy layers */
-.jungle-canopy {
-  position: absolute;
-  bottom: 0; left: -20%;
-  width: 140%;
-  height: 55%;
-  background:
-    radial-gradient(ellipse 30px 40px at 10% 100%, #002a08 0%, transparent 60%),
-    radial-gradient(ellipse 40px 50px at 25% 100%, #003510 0%, transparent 60%),
-    radial-gradient(ellipse 25px 35px at 40% 100%, #002000 0%, transparent 55%),
-    radial-gradient(ellipse 50px 60px at 60% 100%, #003a12 0%, transparent 60%),
-    radial-gradient(ellipse 30px 45px at 75% 100%, #002808 0%, transparent 55%),
-    radial-gradient(ellipse 35px 40px at 90% 100%, #003015 0%, transparent 60%),
-    radial-gradient(ellipse 20px 30px at 100% 100%, #001800 0%, transparent 50%);
-  animation: sway 8s ease-in-out infinite;
-}
-.canopy-2 { animation: sway 11s ease-in-out infinite reverse; opacity: 0.9; }
-.canopy-3 { animation: sway 7s ease-in-out infinite; opacity: 1; }
-.canopy-4 { animation: sway 13s ease-in-out infinite reverse; opacity: 0.85; }
-
-@keyframes sway {
-  0%, 100% { transform: translateX(0) scaleX(1); }
-  25% { transform: translateX(3px) scaleX(1.01); }
-  75% { transform: translateX(-4px) scaleX(0.99); }
-}
-
-/* ── Dino shadows ─────────────────────────────────────────── */
-.dino-shadow { position: absolute; bottom: 12px; }
-
-/* T-Rex — large upright silhouette moving slowly across */
-.trex-shadow {
-  width: 28px; height: 40px;
-  background: #000;
-  clip-path: polygon(
-    35% 0%,   /* top of head */
-    55% 5%,
-    65% 15%,  /* jaw */
-    55% 22%,
-    60% 30%,  /* neck slope */
-    80% 40%,  /* back */
-    85% 60%,  /* tail start */
-    100% 75%, /* tail tip */
-    80% 78%,
-    70% 65%,
-    65% 75%,  /* rear leg */
-    55% 100%,
-    45% 100%,
-    50% 72%,
-    38% 62%,  /* belly */
-    20% 100%,
-    10% 100%,
-    18% 70%,
-    10% 50%,
-    5% 35%,   /* small arm */
-    15% 28%,
-    20% 15%
-  );
-  filter: blur(1.5px);
-  opacity: 0.75;
-  animation: trex-walk 18s linear infinite;
-}
-@keyframes trex-walk {
-  0%   { left: -30px; opacity: 0; }
-  5%   { opacity: 0.75; }
-  90%  { opacity: 0.75; }
-  100% { left: 110%; opacity: 0; }
-}
-
-/* Raptor — low crouching silhouette, fast */
-.raptor-shadow {
-  width: 20px; height: 26px;
-  background: #000;
-  clip-path: polygon(
-    70% 0%,   /* head top */
-    90% 8%,
-    95% 18%,  /* snout */
-    80% 25%,
-    100% 35%, /* back crest */
-    90% 50%,
-    100% 70%, /* tail */
-    80% 72%,
-    70% 55%,
-    60% 72%,  /* rear leg */
-    48% 100%,
-    38% 100%,
-    45% 68%,
-    30% 55%,
-    10% 100%,
-    0% 100%,
-    8% 62%,
-    5% 40%,
-    15% 30%,
-    20% 18%,
-    30% 8%,
-    50% 2%
-  );
-  filter: blur(1px);
-  opacity: 0.8;
-  bottom: 8px;
-  animation: raptor-run 7s linear infinite;
-}
-@keyframes raptor-run {
-  0%   { left: -25px; opacity: 0; }
-  8%   { opacity: 0.8; }
-  88%  { opacity: 0.8; }
-  100% { left: 110%; opacity: 0; }
-}
-
-.raptor-shadow-2 {
-  animation: raptor-run2 9s linear infinite;
-  animation-delay: 2.5s;
-  opacity: 0;
-  width: 16px; height: 22px;
-  bottom: 6px;
-}
-@keyframes raptor-run2 {
-  0%   { left: -20px; opacity: 0; }
-  8%   { opacity: 0.65; }
-  88%  { opacity: 0.65; }
-  100% { left: 110%; opacity: 0; }
-}
-
-.raptor-shadow-3 {
-  animation: raptor-run3 6s linear infinite;
-  animation-delay: 4s;
-  opacity: 0;
-  width: 18px; height: 24px;
-  bottom: 10px;
-}
-@keyframes raptor-run3 {
-  0%   { right: -20px; left: auto; opacity: 0; }
-  8%   { opacity: 0.7; }
-  88%  { opacity: 0.7; }
-  100% { right: 110%; left: auto; opacity: 0; }
-}
-
-/* Brachiosaurus — huge long neck rising from bottom */
-.brachio-shadow {
-  width: 50px; height: 55px;
-  background: #000;
-  clip-path: polygon(
-    45% 0%,   /* top of neck */
-    55% 0%,
-    58% 20%,
-    65% 25%,  /* head */
-    70% 35%,
-    62% 38%,
-    60% 50%,  /* back */
-    80% 55%,
-    100% 60%,
-    100% 100%,
-    70% 100%,
-    68% 75%,  /* rear leg */
-    55% 70%,
-    50% 100%,
-    30% 100%,
-    32% 72%,  /* front leg */
-    20% 65%,
-    0% 65%,
-    0% 60%,
-    38% 50%,
-    40% 30%,
-    42% 10%
-  );
-  filter: blur(2px);
-  opacity: 0.7;
-  bottom: 0;
-  animation: brachio-move 25s ease-in-out infinite;
-}
-@keyframes brachio-move {
-  0%   { left: 10px; opacity: 0; }
-  6%   { opacity: 0.7; }
-  40%  { left: 30px; opacity: 0.7; }
-  50%  { left: 30px; opacity: 0; }
-  51%  { left: -50px; opacity: 0; }
-  56%  { opacity: 0.7; }
-  90%  { left: 20px; opacity: 0.7; }
-  100% { left: 20px; opacity: 0; }
-}
-
-/* ── Grain overlay ─────────────────────────────────────────── */
-.cam-grain {
-  position: absolute; inset: 0; z-index: 5;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-  background-size: 150px 150px;
-  opacity: 0.55;
-  mix-blend-mode: overlay;
-  animation: grain-shift 0.12s steps(1) infinite;
-  pointer-events: none;
-}
-.grain-heavy { opacity: 0.8; }
-
-@keyframes grain-shift {
-  0%  { background-position: 0 0; }
-  20% { background-position: -40px 20px; }
-  40% { background-position: 20px -30px; }
-  60% { background-position: -20px 40px; }
-  80% { background-position: 35px -15px; }
-}
-
-/* ── Scanline overlay on each cam ─────────────────────────── */
+/* ── Cam scanline overlay ────────────────────────────────── */
 .cam-scanline {
   position: absolute; inset: 0; z-index: 6; pointer-events: none;
   background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.25) 2px,
-    rgba(0,0,0,0.25) 4px
+    to bottom, transparent, transparent 2px,
+    rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px
   );
 }
 
-/* ── Cam timestamp ─────────────────────────────────────────── */
+/* ── Cam timestamp ───────────────────────────────────────── */
 .cam-timestamp {
   position: absolute; bottom: 3px; right: 4px;
-  font-family: var(--font-mono);
-  font-size: 6px;
-  color: rgba(0,255,65,0.6);
-  z-index: 10;
-  letter-spacing: 0.5px;
+  font-family: var(--font-mono); font-size: 6px;
+  color: rgba(200,220,200,0.7); z-index: 10; letter-spacing: 0.5px;
 }
 
-/* ── Raptor cam alert pulse ────────────────────────────────── */
+/* ── OFFLINE state ───────────────────────────────────────── */
+.cam-offline-screen {
+  position: absolute; inset: 0; z-index: 20;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  transition: opacity 0.4s;
+}
+.cam-offline-screen.hidden { opacity: 0; pointer-events: none; }
+
+.offline-label {
+  font-family: var(--font-mono); font-size: 8px;
+  color: #002a00; letter-spacing: 2px;
+}
+.offline-bars {
+  display: flex; gap: 1px; align-items: flex-end; height: 16px;
+}
+.offline-bar {
+  width: 3px; background: #001800;
+  animation: offline-bar-idle 2s ease-in-out infinite;
+}
+.offline-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+.offline-bar:nth-child(2) { height: 70%; animation-delay: 0.2s; }
+.offline-bar:nth-child(3) { height: 100%; animation-delay: 0.4s; }
+.offline-bar:nth-child(4) { height: 50%; animation-delay: 0.6s; }
+.offline-bar:nth-child(5) { height: 80%; animation-delay: 0.8s; }
+@keyframes offline-bar-idle {
+  0%,100% { opacity: 0.3; } 50% { opacity: 0.7; }
+}
+
+/* ── NO SIGNAL — raptor cam ──────────────────────────────── */
+.cam-no-signal {
+  position: absolute; inset: 0; z-index: 15;
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  background: #000; gap: 4px;
+}
+.cam-no-signal.visible { display: flex; }
+
+.no-signal-static {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: cover;
+  animation: static-shift 0.1s steps(1) infinite;
+  opacity: 0.9;
+}
+@keyframes static-shift {
+  0%  { background-position: 0 0; }
+  25% { background-position: 30px -20px; }
+  50% { background-position: -10px 15px; }
+  75% { background-position: 20px 5px; }
+}
+
+.no-signal-text {
+  font-family: var(--font-display); font-size: 14px;
+  color: #cc2222; letter-spacing: 3px; z-index: 2;
+  text-shadow: 0 0 10px #ff0000;
+  animation: no-signal-flicker 3s infinite;
+}
+.no-signal-sub {
+  font-family: var(--font-mono); font-size: 7px;
+  color: #660000; letter-spacing: 1px; z-index: 2;
+}
+@keyframes no-signal-flicker {
+  0%,100% { opacity:1; } 88% { opacity:1; } 90% { opacity:0; } 92% { opacity:1; } 95% { opacity:0.4; } 97% { opacity:1; }
+}
+
+/* ── Cam boot flash ──────────────────────────────────────── */
+.cam-boot-flash {
+  position: absolute; inset: 0; z-index: 25; pointer-events: none;
+  background: rgba(0,255,65,0.5); opacity: 0;
+}
+.cam-boot-flash.flashing { animation: cam-boot 0.5s ease forwards; }
+@keyframes cam-boot {
+  0% { opacity: 0.8; } 100% { opacity: 0; }
+}
+
+/* ── Raptor alert pulse ──────────────────────────────────── */
 .cam-alert-flash {
   position: absolute; inset: 0; z-index: 7; pointer-events: none;
   background: rgba(255,160,0,0.06);
   animation: cam-alert-pulse 1.5s ease-in-out infinite;
 }
-@keyframes cam-alert-pulse {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+@keyframes cam-alert-pulse { 0%,100% { opacity:0; } 50% { opacity:1; } }
+
+/* ── Alert log ───────────────────────────────────────────── */
+.alert-item {
+  font-size: 9px; padding: 3px 0;
+  border-bottom: 1px solid rgba(0,50,15,0.4); line-height: 1.4;
 }
+.alert-item.ok { color: #005f20; }
+.alert-item.warn { color: var(--amber-dim); }
+.alert-item.error { color: var(--red-dim); }
+
+/* ── Power restore prompt pulse ──────────────────────────── */
+#power-prompt {
+  font-family: var(--font-mono); font-size: 9px;
+  color: var(--amber); letter-spacing: 1px;
+  text-align: center; padding: 3px 4px;
+  border: 1px solid var(--amber-dim);
+  border-radius: 1px; margin-top: 6px;
+  animation: blink-text 1.2s infinite;
+  display: none;
+}
+#power-prompt.visible { display: block; }
